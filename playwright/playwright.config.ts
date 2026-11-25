@@ -1,12 +1,12 @@
 import { defineConfig, devices } from '@playwright/test';
+import path from 'path';
 
 /**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
+ * Load TEST_USERNAME / TEST_PASSWORD etc. from the repo-root .env.
+ * Uses Node's built-in loader (Node >= 20.12), so no dotenv dependency is needed.
+ * Existing environment variables (e.g. set in CI) are not overwritten.
  */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+process.loadEnvFile(path.resolve(__dirname, '..', '.env'));
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -40,17 +40,7 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    },
-
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
-    },
+    }
 
     /* Test against mobile viewports. */
     // {

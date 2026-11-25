@@ -27,6 +27,14 @@ export class BasePage {
     await expect(locator).toBeVisible();
   }
 
+  async expectUrl(pattern: RegExp) {
+    await expect(this.page).toHaveURL(pattern);
+  }
+
+  async expectUrlNot(pattern: RegExp) {
+    await expect(this.page).not.toHaveURL(pattern);
+  }
+
   async getPageTitle() {
     return await this.page.title();
   }
